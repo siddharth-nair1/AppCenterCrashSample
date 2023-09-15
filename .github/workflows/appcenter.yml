@@ -1,0 +1,17 @@
+name: Trigger Build in App Center
+
+on:
+    workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Build in App Center
+        run: |
+          curl -X POST -H "X-API-Token: ${{ secrets.APPCENTER_API_TOKEN }}" -H "Content-Type: application/json" -d '{"branch": "${{ github.ref }}", "commitHash": "${{ github.sha }}"}' "https://api.appcenter.ms/v0.1/apps/siddharthnair2022-gmail.com/Android-Sample/branches/appcenter-test/builds"
+        env:
+          APPCENTER_API_TOKEN: ${{ secrets.APPCENTER_API_TOKEN }}
+
+
+          #f72bb0ca2f75151e891ae16544a4b07c82c22db2
