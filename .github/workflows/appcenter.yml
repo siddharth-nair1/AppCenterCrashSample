@@ -20,7 +20,7 @@ jobs:
         
     - name: Set up App Center authentication
       env:
-        TOKEN: ${{ secrets.APPCENTER_TOKEN }}  
+        TOKEN: ${{ secrets.APPCENTER_API_TOKEN }}  
       run: |
         appcenter login --token $TOKEN
         
@@ -32,7 +32,7 @@ jobs:
         build_id=$(appcenter build queue --branch $BRANCH --app $APP_NAME --quiet)
         echo "$build_id"
 
-        sleep 5m
+        sleep 30m
 
         status="none"
         while [ "$status" != "succeeded" ]; do
@@ -47,6 +47,3 @@ jobs:
       run: |
         ls
         ls *.apk
-
-
-          #f72bb0ca2f75151e891ae16544a4b07c82c22db2
