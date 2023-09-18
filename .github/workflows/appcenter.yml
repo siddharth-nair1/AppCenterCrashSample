@@ -11,8 +11,9 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
-    
+
+    - name: Checkiout Code 
+      uses: actions/checkout@v2
     - name: Install App Center CLI
       run: |
         curl -sL https://api.appcenter.ms/cli | bash
@@ -31,7 +32,7 @@ jobs:
         build_id=$(appcenter build queue --branch $BRANCH --app $APP_NAME --quiet)
         echo "$build_id"
 
-        sleep 30m
+        sleep 5m
 
         status="none"
         while [ "$status" != "succeeded" ]; do
