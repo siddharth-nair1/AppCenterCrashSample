@@ -23,7 +23,7 @@ jobs:
         TOKEN: ${{ secrets.APPCENTER_API_TOKEN }}  
       run: |
         appcenter login --token $TOKEN
-        
+        #this is a sample line
     - name: Build Android App
       env:
         APP_NAME: Android-Sample
