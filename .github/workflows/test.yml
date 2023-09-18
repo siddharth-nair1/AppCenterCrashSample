@@ -1,0 +1,49 @@
+name: Build Android App
+
+on: 
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+
+    - name: Checkiout Code 
+      uses: actions/checkout@v2
+    - name: Install App Center CLI
+      run: |
+        curl -sL https://api.appcenter.ms/cli | bash
+        
+    - name: Set up App Center authentication
+      env:
+        TOKEN: ${{ secrets.APPCENTER_API_TOKEN }}  
+      run: |
+        appcenter login --token $TOKEN
+        #this is a sample line
+    - name: Build Android App
+      env:
+        APP_NAME: Android-Sample
+        BRANCH: ${{ github.ref }} 
+      run: |
+        build_id=$(appcenter build queue --branch $BRANCH --app $APP_NAME --quiet)
+        echo "$build_id"
+
+        sleep 30m
+
+        status="none"
+        while [ "$status" != "succeeded" ]; do
+          status=$(appcenter build branches show --app $APP_NAME --branch $BRANCH --quiet --output json | jq -r '.status')
+          echo "$status"
+          sleep 5m
+        done
+        
+        appcenter build download --id $build_id --app $APP_NAME --file-filter "*.apk" --type build
+        
+    - name: Log build artifacts
+      run: |
+        ls
+        ls *.apk
