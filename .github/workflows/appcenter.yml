@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Install App Center CLI
       run: |
-        curl -sL https://api.appcenter.ms/cli | bash
+        npm install --location=global appcenter-cli
         
     - name: Set up App Center authentication
       env:
