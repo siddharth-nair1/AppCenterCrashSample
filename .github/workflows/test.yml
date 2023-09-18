@@ -31,7 +31,7 @@ jobs:
       env:
         APP_NAME: Android-Sample
       run: |
-        appcenter build queue --app $APP_NAME --branch ${{ github.ref }} --quiet)
+        appcenter build queue --app $APP_NAME --branch ${{ github.ref }} --quiet
         appcenter build wait --app $APP_NAME
 
     - name: Download and Log build artifacts
